@@ -1,0 +1,87 @@
+/* Global Variables */
+:root {
+    --first-color: #f78536;
+    --second-color: #dfebed;
+    --third-color: #497285;
+    --fourth-color: #2b4450;
+    --header-bg: var(--fourth-color);
+    --header-color: var(--second-color);
+    --body-bg: var(--second-color);
+    --body-color: #0a1920;
+    --footer-bg: var(--third-color);
+    --footer-color: var(--second-color);
+    --footer-padding-y: 20px;
+    --container-max: 1230px;
+    --container-padding-x: 16px;
+    --card-bg: var(--first-color);
+    --card-color: var(--second-color);
+}
+
+/* Reset */
+html, body {
+    margin: 0;
+    padding: 0;
+    color: var(--body-color);
+}
+
+/* Main Structure */
+.header-main {
+    background-color: var(--header-bg);
+    color: var(--header-color);
+}
+.body-main {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--body-bg);
+}
+.footer-main {
+    background-color: var(--footer-bg);
+    color: var(--footer-color);
+    padding-top: var(--footer-padding-y);
+    padding-bottom: var(--footer-padding-y);
+}
+
+/* Containers */
+.container-fluid {
+    padding-left: var(--container-padding-x);
+    padding-right: var(--container-padding-x);
+}
+.container-main {
+    max-width: var(--container-max);
+    padding-left: var(--container-padding-x);
+    padding-right: var(--container-padding-x);
+    padding-top: 80px;
+    padding-bottom: 128px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Text alignment */
+.text-left {text-align: left}
+.text-center {text-align: center}
+.text-right {text-align: right}
+
+/* Margin auto classes */
+.ml-auto, .mx-auto {margin-left: auto}
+.mr-auto, .mx-auto {margin-right: auto}
+.mt-auto, .my-auto {margin-top: auto}
+.mb-auto, .my-auto {margin-bottom: auto}
+
+/* Color palette */
+.first-color {background: var(--first-color)}	
+.second-color {background: var(--second-color)}
+.third-color {background: var(--third-color)}
+.fourth-color {background: var(--fourth-color)}
+
+/* General */
+.book-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(200px,1fr));
+    gap: 24px;
+}
+.book-card {
+    background-color: var(--card-bg);
+    padding: 24px;
+    color: var(--card-color);
+}
