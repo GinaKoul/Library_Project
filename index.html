@@ -36,5 +36,29 @@
     <footer class="footer-main container-fluid mt-auto">
         <div>&copy Gina Kouliaki</div>
     </footer>
+    <dialog id="modalDialog" open>
+        <form>
+            <div>
+                <label for="bookTitle">Title</label>
+                <input id="bookTitle" type="text" name="addBook.title">
+            </div>
+            <div>
+                <label for="bookAuthor">Author</label>
+                <input id="bookAuthor" type="text" name="addBook.author">
+            </div>
+            <div>
+                <label for="bookPages">Pages</label>
+                <input id="bookPages" type="number" name="addBook.pages">
+            </div>
+            <div>
+                <label for="bookRead">Read</label>
+                <input id="bookRead" type="checkbox" name="addBook.read">
+            </div>
+            <div>
+                <button value="cancel" formmethod="dialog">Cancel</button>
+                <button id="addBtn" value="default">Add</button>
+            </div>
+        </form>
+    </dialog>
 </body>
 </html>

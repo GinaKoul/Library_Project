@@ -1,3 +1,5 @@
+let myLibrary = [];
+
 function Book(title,author,pages,read) {
     this.title = title;
     this.author = author;
@@ -14,6 +16,14 @@ function Book(title,author,pages,read) {
     };
 }
 
-const theHobbit = new Book('The Hobbit','J.R.R. Tolkien',295,false);
+function addBookToLibrary(event) {
+    event.preventDefault
+    const newBook = new Book('The Hobbit','J.R.R. Tolkien',295,false);
+    console.log(newBook.info());
+}
 
-console.log(theHobbit.info());
+document.addEventListener('submit',addBookToLibrary);
+
+// const theHobbit = new Book('The Hobbit','J.R.R. Tolkien',295,false);
+
+// console.log(theHobbit.info());
