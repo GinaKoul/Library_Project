@@ -8,12 +8,15 @@
     <script src="./main.js"></script>
 </head>
 <body class="body-main">
-    <header class="header-main container-fluid mb-auto text-center">
-        <h1>My Library</h1>
+    <header class="header-main mb-auto text-center">
+        <div class="mx-auto container-max d-flex-wrap">
+            <h1 class="mr-auto">My Library</h1>
+            <button id="showBookDialog">Add book to Library</button>
+        </div>
     </header>
     <div class="main-content">
         <div class="container-main">
-            <section class="book-grid">
+            <section id="bookGrid" class="book-grid">
                 <!--article.book-card{card $}*15-->
                 <article class="book-card">card 1</article>
                 <article class="book-card">card 2</article>
@@ -36,21 +39,21 @@
     <footer class="footer-main container-fluid mt-auto">
         <div>&copy Gina Kouliaki</div>
     </footer>
-    <dialog id="modalDialog" open>
+    <dialog id="addBookDialog">
         <form>
-            <div>
-                <label for="bookTitle">Title</label>
-                <input id="bookTitle" type="text" name="addBook.title">
+            <div class="form-field">
+                <label for="bookTitle" class="sr-only">Title</label>
+                <input id="bookTitle" type="text" name="addBook.title" placeholder="Title*" autofocus>
             </div>
-            <div>
-                <label for="bookAuthor">Author</label>
-                <input id="bookAuthor" type="text" name="addBook.author">
+            <div class="form-field">
+                <label for="bookAuthor" class="sr-only">Author</label>
+                <input id="bookAuthor" type="text" name="addBook.author" placeholder="Author*">
             </div>
-            <div>
-                <label for="bookPages">Pages</label>
-                <input id="bookPages" type="number" name="addBook.pages">
+            <div class="form-field">
+                <label for="bookPages" class="sr-only">Pages</label>
+                <input id="bookPages" type="number" name="addBook.pages" placeholder="Pages*">
             </div>
-            <div>
+            <div class="form-field checkbox-field">
                 <label for="bookRead">Read</label>
                 <input id="bookRead" type="checkbox" name="addBook.read">
             </div>

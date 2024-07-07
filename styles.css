@@ -12,11 +12,16 @@
     --header-color: var(--second-color);
     --body-bg: var(--second-color);
     --body-color: #0a1920;
+    --border-color: #c0c0ad;
     --footer-bg: var(--third-color);
     --footer-color: var(--second-color);
     --footer-padding-y: 20px;
     --container-max: 1230px;
     --container-padding-x: 16px;
+    --btn-padding-x: 8px;
+    --btn-padding-y: 24px;
+    --input-padding-x: var(--btn-padding-x);
+    --input-padding-y: var(--btn-padding-y);
     --card-bg: var(--first-color);
     --card-color: var(--second-color);
 }
@@ -107,6 +112,9 @@ h3 {font-size: var(--heading-3)}
     padding-left: var(--container-padding-x);
     padding-right: var(--container-padding-x);
 }
+.container-max {
+    max-width: var(--container-max);
+}
 .container-main {
     max-width: var(--container-max);
     padding-left: var(--container-padding-x);
@@ -135,6 +143,32 @@ h3 {font-size: var(--heading-3)}
 .fourth-color {background: var(--fourth-color)}
 
 /* General */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+}
+.d-flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+button {
+    outline: none;
+    border: none;
+    padding: var(--btn-padding-x) var(--btn-padding-y);
+    background-color: var(--third-color);
+    color: var(--second-color);
+    transition: all .2s linear;
+}
+button:hover {
+    background-color: var(--first-color);
+    cursor: pointer;
+}
 .book-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill,minmax(200px,1fr));
@@ -149,12 +183,51 @@ h3 {font-size: var(--heading-3)}
 /* Modal Dialog */
 
 dialog {
-    top: 50%;
+    top: calc(50% - 150px);
     transform: translateY(-50%);
     border: none;
     outline: none;
+    min-height: 300px;
 }
-
 dialog::backdrop {
     background-color: rgb(0 0 0 / 25%);
+    z-index: 10;
+}
+
+/* Form Fields */
+.form-field {
+    margin-bottom: 16px;
+}
+.checkbox-field {
+    position: relative;
+}
+.checkbox-field:before {
+    position: absolute;
+    content: "";
+    left: 0;
+    top: 0;
+    width: 14px;
+    height: 14px;
+    border: 1px solid var(--border-color);
+}
+.checkbox-field:has(input:checked):after {
+    position: absolute;
+    content: "\2713";
+    left: 1px;
+    top: 1px;
+    width: 14px;
+    height: 14px;
+    background-color: var(--first-color);
+    color: var(--second-color);
+}
+input {
+    padding: var(--input-padding-x) var(--input-padding-y);
+    border: 1px solid var(--border-color);
+    outline: none;
+}
+input:focus {
+    border: 1px solid var(--first-color);
+    -webkit-box-shadow: 0 0 2px 2px var(--first-color);
+    -moz-box-shadow: 0 0 2px 2px var(--first-color);
+    box-shadow: 0 0 2px 2px var(--first-color);
 }
