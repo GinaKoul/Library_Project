@@ -201,31 +201,48 @@ dialog::backdrop {
 .checkbox-field {
     position: relative;
 }
+.checkbox-field label {
+  padding-left: 25px;
+  pointer-events: none;
+}
+.checkbox-field input {
+  position: absolute;  
+  left: -5px;
+  top: -3px;
+  width: 17px;
+  height: 17px;
+  opacity: 0;
+}
 .checkbox-field:before {
-    position: absolute;
-    content: "";
-    left: 0;
-    top: 0;
-    width: 14px;
-    height: 14px;
-    border: 1px solid var(--border-color);
+  position: absolute;  
+  content: "";
+  left: 2px;
+  top: 2px;
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--border-color);
+  pointer-events: none;
+}
+
+.checkbox-field:has(input:checked):before {
+    background-color: var(--fourth-color);
 }
 .checkbox-field:has(input:checked):after {
     position: absolute;
-    content: "\2713";
-    left: 1px;
-    top: 1px;
-    width: 14px;
-    height: 14px;
-    background-color: var(--first-color);
-    color: var(--second-color);
+    content: "";
+    background-image: url("./checkmark.svg");
+    left: 5px;
+    top: 5px;
+    width: 10px;
+    height: 10px;
+    pointer-events: none;
 }
 input {
     padding: var(--input-padding-x) var(--input-padding-y);
     border: 1px solid var(--border-color);
     outline: none;
 }
-input:focus {
+input:focus, .checkbox-field:has(input:focus):before {
     border: 1px solid var(--first-color);
     -webkit-box-shadow: 0 0 2px 2px var(--first-color);
     -moz-box-shadow: 0 0 2px 2px var(--first-color);
