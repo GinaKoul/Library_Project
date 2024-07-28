@@ -7,6 +7,7 @@
     --heading-1: 2.5rem;
     --heading-2: 2rem;
     --heading-3: 1.5rem;
+    --heading-book: 1.25rem;
     --default-font-size: 1rem;
     --header-bg: var(--fourth-color);
     --header-color: var(--second-color);
@@ -23,7 +24,7 @@
     --input-padding-x: var(--btn-padding-x);
     --input-padding-y: var(--btn-padding-y);
     --card-bg: var(--first-color);
-    --card-color: var(--second-color);
+    --card-color: var(--second-color); 
 }
 
 /* Reset */
@@ -88,6 +89,9 @@ html, body {
 h1 {font-size: var(--heading-1)}
 h2 {font-size: var(--heading-2)}
 h3 {font-size: var(--heading-3)}
+h1, h2, h3 {font-weight: bold}
+.font-bold {font-weight: bold}
+.font-italic {font-style: italic}
 
 /* Main Structure */
 .header-main {
@@ -176,14 +180,54 @@ button:hover {
 }
 .book-card {
     background-color: var(--card-bg);
-    padding: 24px;
+    padding: 48px 24px 24px 24px;
     color: var(--card-color);
+    position: relative;
+}
+.book-card button.close-btn {
+    position: absolute;
+    top: 24px;
+    right: 0;
+    width: 24px;
+    height: 24px;
+    background-color: transparent;
+    background-image: url(./images/cancel.svg);
+    background-repeat: no-repeat;
+    background-size: 24px;
+}
+.book-card button.close-btn:hover {
+    background-image: url(./images/cancel_frt.svg);
+}
+.book-card h2 {
+    font-size: var(--heading-book);
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+.book-card .read, .book-card .not-read {
+    position: relative;
+    padding-right: 22px;
+}
+.book-card .read::after, .book-card .not-read::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 14px;
+    height: 14px;
+    background-repeat: no-repeat;
+    background-size: 14px;
+}
+.book-card .read::after {
+    background-image: url("./images/checkmark.svg");
+}
+.book-card .not-read::after {
+    background-image: url("./images/close.svg");
 }
 
 /* Modal Dialog */
 
 dialog {
-    top: calc(50% - 150px);
+    top: 50%;
     transform: translateY(-50%);
     border: none;
     outline: none;
@@ -230,7 +274,7 @@ dialog::backdrop {
 .checkbox-field:has(input:checked):after {
     position: absolute;
     content: "";
-    background-image: url("./checkmark.svg");
+    background-image: url("./images/checkmark.svg");
     left: 5px;
     top: 5px;
     width: 10px;

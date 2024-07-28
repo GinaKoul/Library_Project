@@ -7,15 +7,44 @@ function Book(title,author,pages,read) {
     this.author = author;
     this.pages = pages;
     this.read = read;
-    this.info = function() {
-        let readStatus;
-        if(this.read) {
-            readStatus = 'read';
-        } else {
-            readStatus = 'not read yet';
-        }
-        return `${this.title} by ${this.author}, ${this.pages} pages, ${readStatus}`;
+    this.titleInfo = function() {
+        let bookTitle = document.createElement('h2');
+        bookTitle.textContent = this.title;
+        return bookTitle;
     };
+    this.authorInfo = function() {
+        let bookAuthor = document.createElement('p');
+        let authorKey = document.createElement('span');
+        let authorContent = document.createElement('span');
+        authorKey.classList.add('font-bold');
+        authorKey.textContent = 'Author: ';
+        authorContent.classList.add('font-italic');
+        authorContent.textContent = this.author;
+        bookAuthor.append(authorKey, authorContent);
+        return bookAuthor;
+    };
+    this.pagesInfo = function() {
+        let bookPages = document.createElement('p');
+        let pagesKey = document.createElement('span');
+        let pagesContent = document.createElement('span');
+        pagesKey.classList.add('font-bold');
+        pagesKey.textContent = 'Pages: ';
+        pagesContent.classList.add('font-italic');
+        pagesContent.textContent = `${this.pages} pages`;
+        bookPages.append(pagesKey, pagesContent);
+        return bookPages;
+    };
+    this.readInfo = function() {
+        let bookRead = document.createElement('p');
+        bookRead.classList.add('font-bold');
+        bookRead.textContent = 'Read';
+        if(this.read) {
+            bookRead.classList.add('read');
+        } else {
+            bookRead.classList.add('not-read');
+        }
+        return bookRead;
+    }
     this.changeReadStatus = function() {
         this.read = this.read ? this.read = false:this.read = true;
     }
@@ -24,14 +53,16 @@ function Book(title,author,pages,read) {
 // Create book card
 function createBookCard(newBook) {
     let card = document.createElement('article');
+    let closeButton = document.createElement('button');
+    closeButton.classList.add('close-btn');
     card.classList.add('book-card');
-    card.textContent = newBook.info();
+    card.append(closeButton,newBook.titleInfo(),newBook.authorInfo(),newBook.pagesInfo(),newBook.readInfo());
     return card;
 }
 
 // Create new Book using the book constructor and add it to the Library array
 function addBookToLibrary(event) {
-    event.preventDefault
+    event.preventDefault;
     let newBook = new Book(bookTitle?.value,bookAuthor?.value,bookPages?.value,bookRead?.checked);
     myLibrary.push(newBook);
     addBookDialog.querySelector('form').reset();
@@ -75,5 +106,3 @@ if (document.readyState === "loading") {
     // `DOMContentLoaded` has already fired
     initDialog();
 }
-
-// console.log(theHobbit.info());
