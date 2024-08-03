@@ -180,13 +180,13 @@ button:hover {
 }
 .book-card {
     background-color: var(--card-bg);
-    padding: 48px 24px 24px 24px;
+    padding: 24px;
     color: var(--card-color);
     position: relative;
 }
 .book-card button.close-btn {
     position: absolute;
-    top: 24px;
+    top: 32px;
     right: 0;
     width: 24px;
     height: 24px;
@@ -200,28 +200,56 @@ button:hover {
 }
 .book-card h2 {
     font-size: var(--heading-book);
-    padding: 8px 0;
+    padding: 8px 24px 8px 0;
     border-bottom: 1px solid var(--border-color);
 }
-.book-card .read, .book-card .not-read {
-    position: relative;
-    padding-right: 22px;
+.read-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
-.book-card .read::after, .book-card .not-read::after {
+.book-card .read-switch {
+    position: relative;
+    width: 40px;
+    height: 20px;
+    background: none;
+    border-radius: 10px;
+}
+.book-card .read-switch:before {
     content: "";
     position: absolute;
     top: 0;
-    right: 0;
-    width: 14px;
-    height: 14px;
-    background-repeat: no-repeat;
-    background-size: 14px;
+    left: 0;
+    width: 40px;
+    height: 20px;
+    background: var(--second-color);
+    border-radius: 10px;
+    opacity: 0.4;
 }
-.book-card .read::after {
-    background-image: url("./images/checkmark.svg");
+.book-card .read-switch:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    background: var(--second-color);
+    border-radius: 50%;
+    opacity: 1;
+    transition: transform 0.2s ease-out;
 }
-.book-card .not-read::after {
-    background-image: url("./images/close.svg");
+.book-card .read-switch.read:before {
+    animation: 0.2s changeColor forwards;
+}
+.book-card .read-switch.read:after {
+    transform: translateX(100%);
+}
+
+@keyframes changeColor {
+    to {
+        opacity: 1;
+        background-color: var(--third-color);
+    }
 }
 
 /* Modal Dialog */
@@ -291,4 +319,17 @@ input:focus, .checkbox-field:has(input:focus):before {
     -webkit-box-shadow: 0 0 2px 2px var(--first-color);
     -moz-box-shadow: 0 0 2px 2px var(--first-color);
     box-shadow: 0 0 2px 2px var(--first-color);
+}
+.sr-only {
+	border: 0 !important;
+	clip: rect(1px, 1px, 1px, 1px) !important;
+	-webkit-clip-path: inset(50%) !important;
+		clip-path: inset(50%) !important;
+	height: 1px !important;
+	margin: -1px !important;
+	overflow: hidden !important;
+	padding: 0 !important;
+	position: absolute !important;
+	width: 1px !important;
+	white-space: nowrap !important;
 }

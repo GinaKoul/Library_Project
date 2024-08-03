@@ -1,8 +1,10 @@
 let myLibrary = [];
-let showButton, addBookDialog, bookTitle, bookAuthor, bookPages, bookRead, addBtn;
+let bookGrid, showButton, addBookDialog, bookTitle, bookAuthor, bookPages, bookRead, addBtn;
+let increasingId = 0;
 
 // Book constructor
-function Book(title,author,pages,read) {
+function Book(id,title,author,pages,read) {
+    this.id = id;
     this.title = title;
     this.author = author;
     this.pages = pages;
@@ -35,26 +37,55 @@ function Book(title,author,pages,read) {
         return bookPages;
     };
     this.readInfo = function() {
+        let readContainer = document.createElement('div');
         let bookRead = document.createElement('p');
+        let readStatusBtn = document.createElement('button');
+        readContainer.classList.add('read-wrap');
         bookRead.classList.add('font-bold');
         bookRead.textContent = 'Read';
-        if(this.read) {
-            bookRead.classList.add('read');
-        } else {
-            bookRead.classList.add('not-read');
-        }
-        return bookRead;
+        readStatusBtn.classList.add('read-switch');
+        readStatusBtn.addEventListener('click',changeStatus);
+        this.read?readStatusBtn.classList.add('read'):null;
+        readContainer.append(bookRead,readStatusBtn);
+        return readContainer;
     }
     this.changeReadStatus = function() {
         this.read = this.read ? this.read = false:this.read = true;
     }
 }
 
+function removeBook() {
+    const filteredLibrary = myLibrary.filter((book) => book.id != this.closest('.book-card')?.getAttribute('data-id'));
+    myLibrary = filteredLibrary;
+    // this.closest('.book-card')?.remove();
+    showLibrary();
+}
+
+function changeStatus() {
+    this.classList.toggle('read');
+    const currentBook = myLibrary.find((book) => book.id == this.closest('.book-card')?.getAttribute('data-id'));
+    currentBook.changeReadStatus();
+}
+
+function showLibrary() {
+    bookGrid.textContent = '';
+    myLibrary.forEach(book => {
+        let newBookCard = createBookCard(book);
+        bookGrid.appendChild(newBookCard);
+    })
+}
+
 // Create book card
 function createBookCard(newBook) {
     let card = document.createElement('article');
     let closeButton = document.createElement('button');
+    let closeBtnText = document.createElement('span');
     closeButton.classList.add('close-btn');
+    closeBtnText.classList.add('sr-only');
+    closeBtnText.textContent = 'Remove from Library';
+    closeButton.appendChild(closeBtnText);
+    closeButton.addEventListener('click',removeBook);
+    card.setAttribute('data-id',newBook.id);
     card.classList.add('book-card');
     card.append(closeButton,newBook.titleInfo(),newBook.authorInfo(),newBook.pagesInfo(),newBook.readInfo());
     return card;
@@ -63,19 +94,21 @@ function createBookCard(newBook) {
 // Create new Book using the book constructor and add it to the Library array
 function addBookToLibrary(event) {
     event.preventDefault;
-    let newBook = new Book(bookTitle?.value,bookAuthor?.value,bookPages?.value,bookRead?.checked);
+    increasingId ++;
+    let newBook = new Book(increasingId,bookTitle?.value,bookAuthor?.value,bookPages?.value,bookRead?.checked);
     myLibrary.push(newBook);
     addBookDialog.querySelector('form').reset();
-    let bookGrid = document.querySelector('#bookGrid');
-    let newBookCard = createBookCard(newBook);
-    bookGrid.appendChild(newBookCard);
-    console.log(newBook.read);
-    newBook.changeReadStatus();
-    console.log(newBook.read);
+    showLibrary();
+    // let newBookCard = createBookCard(newBook);
+    // bookGrid.appendChild(newBookCard);
+    // console.log(newBook.read);
+    // newBook.changeReadStatus();
+    // console.log(newBook.read);
 }
 
 function initDialog() {
     // Initialize dialog variables
+    bookGrid = document.querySelector('#bookGrid');
     showButton = document.querySelector("#showBookDialog");
     addBookDialog = document.querySelector("dialog");
     bookTitle = addBookDialog?.querySelector("#bookTitle");
@@ -83,6 +116,11 @@ function initDialog() {
     bookPages = addBookDialog?.querySelector("#bookPages");
     bookRead = addBookDialog?.querySelector("#bookRead");
     addBtn = addBookDialog?.querySelector("#addBtn");
+
+    increasingId ++;
+    let newBook = new Book(increasingId,'The Hobbit','Me',243,false);
+    myLibrary.push(newBook);
+    showLibrary();
 
     // "Show the dialog" button opens the <dialog> modally
     showButton.addEventListener("click", () => {
