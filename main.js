@@ -54,19 +54,22 @@ function Book(id,title,author,pages,read) {
     }
 }
 
+// Remove book from Library array and from DOM
 function removeBook() {
     const filteredLibrary = myLibrary.filter((book) => book.id != this.closest('.book-card')?.getAttribute('data-id'));
     myLibrary = filteredLibrary;
-    // this.closest('.book-card')?.remove();
-    showLibrary();
+    this.closest('.book-card')?.remove();
+    // showLibrary();
 }
 
+// Toggle the read status of Book object and card
 function changeStatus() {
     this.classList.toggle('read');
     const currentBook = myLibrary.find((book) => book.id == this.closest('.book-card')?.getAttribute('data-id'));
     currentBook.changeReadStatus();
 }
 
+// Display book cards of Library
 function showLibrary() {
     bookGrid.textContent = '';
     myLibrary.forEach(book => {
@@ -101,13 +104,10 @@ function addBookToLibrary(event) {
     showLibrary();
     // let newBookCard = createBookCard(newBook);
     // bookGrid.appendChild(newBookCard);
-    // console.log(newBook.read);
-    // newBook.changeReadStatus();
-    // console.log(newBook.read);
 }
 
 function initDialog() {
-    // Initialize dialog variables
+    // Initialize variables
     bookGrid = document.querySelector('#bookGrid');
     showButton = document.querySelector("#showBookDialog");
     addBookDialog = document.querySelector("dialog");
@@ -117,12 +117,13 @@ function initDialog() {
     bookRead = addBookDialog?.querySelector("#bookRead");
     addBtn = addBookDialog?.querySelector("#addBtn");
 
+    // Add book to Library
     increasingId ++;
-    let newBook = new Book(increasingId,'The Hobbit','Me',243,false);
+    let newBook = new Book(increasingId,'The Hobbit','J. R. R. Tolkien.',300,false);
     myLibrary.push(newBook);
     showLibrary();
 
-    // "Show the dialog" button opens the <dialog> modally
+    // "Add book to library" button opens the <dialog> modally
     showButton.addEventListener("click", () => {
         addBookDialog.showModal();
     });
@@ -132,7 +133,7 @@ function initDialog() {
 
     // Prevent the "add" button from the default behavior of submitting the form, and close the dialog with the `close()` method, which triggers the "close" event.
     addBtn.addEventListener("click", (event) => {
-        event.preventDefault(); // We don't want to submit this fake form
+        event.preventDefault();
         addBookDialog.close();
     });
 }
