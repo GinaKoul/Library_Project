@@ -1,5 +1,5 @@
 # library_project
-Library project using constructors. 
+Library project using classes.
 It does not contain any kind of storage.
 
 A book can be added to the Library by clicking the "Add book to Library" button and filling up the form.

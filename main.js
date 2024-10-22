@@ -1,6 +1,42 @@
-let myLibrary = [];
-let bookGrid, showButton, addBookDialog, bookTitle, bookAuthor, bookPages, bookRead, addBtn;
+let library, bookGrid, showButton, addBookDialog, bookTitle, bookAuthor, bookPages, bookRead, addBtn;
 let increasingId = 0;
+
+class Library {
+
+    constructor(books) {
+        this.books = books;
+    }
+
+    get books() {
+        return this._books;
+    }
+
+    set books(value) {
+        this._books = value;
+    }
+
+    // Display book cards of Library
+    showLibrary() {
+        bookGrid.textContent = '';
+        this.books.forEach(book => {
+            let newBookCard = book.card;
+            bookGrid.appendChild(newBookCard);
+        })
+    }
+
+    // Add new Book to the Library array
+    addBook(value) {
+        this.books.push(value);
+        this.showLibrary();
+    }
+
+    // Remove book from Library array
+    removeBook() {
+        const filteredLibrary = library.books.filter((book) => book.id != this.closest('.book-card')?.getAttribute('data-id'));
+        library.books = filteredLibrary;
+        library.showLibrary();
+    }
+}
 
 class Book {
     constructor(id,title,author,pages,read) {
@@ -89,7 +125,7 @@ class Book {
         closeBtnText.classList.add('sr-only');
         closeBtnText.textContent = 'Remove from Library';
         closeButton.appendChild(closeBtnText);
-        closeButton.addEventListener('click',removeBook);
+        closeButton.addEventListener('click',library.removeBook);
         card.setAttribute('data-id',id);
         card.classList.add('book-card');
         card.append(closeButton,title,author,pages,read);
@@ -99,41 +135,30 @@ class Book {
     // Toggle the read status of Book class and card
     changeReadStatus() {
         this.classList.toggle('read');
-        const currentBook = myLibrary.find((book) => book.id == this.closest('.book-card')?.getAttribute('data-id'));
+        const currentBook = library.books.find((book) => book.id == this.closest('.book-card')?.getAttribute('data-id'));
         this._read = this._read ? this._read = false:this._read = true;
     }
 }
 
-// Remove book from Library array and from DOM
-function removeBook() {
-    const filteredLibrary = myLibrary.filter((book) => book.id != this.closest('.book-card')?.getAttribute('data-id'));
-    myLibrary = filteredLibrary;
-    this.closest('.book-card')?.remove();
-    // showLibrary();
-}
-
-// Display book cards of Library
-function showLibrary() {
-    bookGrid.textContent = '';
-    myLibrary.forEach(book => {
-        let newBookCard = book.card;
-        bookGrid.appendChild(newBookCard);
-    })
-}
-
-// Create new Book using the book constructor and add it to the Library array
+// Get Book info and add book to library
 function addBookToLibrary(event) {
     event.preventDefault;
     increasingId ++;
     let newBook = new Book(increasingId,bookTitle?.value,bookAuthor?.value,bookPages?.value,bookRead?.checked);
-    myLibrary.push(newBook);
+    library.addBook(newBook);
     addBookDialog.querySelector('form').reset();
-    showLibrary();
-    // let newBookCard = createBookCard(newBook);
-    // bookGrid.appendChild(newBookCard);
 }
 
-function initDialog() {
+function openModalDialog() {
+    addBookDialog.showModal();
+}
+
+function closeModalDialog(event) {
+    event.preventDefault();
+    addBookDialog.close();
+}
+
+function cacheDOM() {
     // Initialize variables
     bookGrid = document.querySelector('#bookGrid');
     showButton = document.querySelector("#showBookDialog");
@@ -143,26 +168,30 @@ function initDialog() {
     bookPages = addBookDialog?.querySelector("#bookPages");
     bookRead = addBookDialog?.querySelector("#bookRead");
     addBtn = addBookDialog?.querySelector("#addBtn");
+}
 
-    // Add book to Library
-    increasingId ++;
-    let newBook = new Book(increasingId,'The Hobbit','J. R. R. Tolkien.',300,false);
-    myLibrary.push(newBook);
-    showLibrary();
-
+function bindEvents() {
     // "Add book to library" button opens the <dialog> modally
-    showButton.addEventListener("click", () => {
-        addBookDialog.showModal();
-    });
+    showButton.addEventListener("click", openModalDialog);
 
     // "Cancel" button closes the dialog without submitting because of [formmethod="dialog"], triggering a close event.
     addBookDialog.addEventListener("close", addBookToLibrary);
 
     // Prevent the "add" button from the default behavior of submitting the form, and close the dialog with the `close()` method, which triggers the "close" event.
-    addBtn.addEventListener("click", (event) => {
-        event.preventDefault();
-        addBookDialog.close();
-    });
+    addBtn.addEventListener("click", closeModalDialog);
+}
+
+function initDialog() {
+    cacheDOM();
+    bindEvents();
+
+    library = new Library([]);
+
+    // Add book to Library
+    increasingId ++;
+    let newBook = new Book(increasingId,'The Hobbit','J. R. R. Tolkien.',300,false);
+    library.addBook(newBook);
+    library.showLibrary();
 }
 
 if (document.readyState === "loading") {
