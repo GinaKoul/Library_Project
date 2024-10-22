@@ -6,3 +6,5 @@ A book can be added to the Library by clicking the "Add book to Library" button 
 Each book card consists of a remove button to remove the book from the library, the book details and a toggle switch to change the read status of the book.
 
 Project Link: https://ginakoul.github.io/library_project/
+
+The same project using classes can be found in the branch library-classes.
